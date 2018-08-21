@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Modal Branching Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
+</head>
+<body>
+	<div class="ui first modal">
+		<div class="header">Starting Modal</div>
+		<div class="content">
+			<p>Our first modal...</p>
+		</div>
+		<div class="actions">
+			<div class="ui approve button">Next</div>
+			<div class="ui cancel button">Exit</div>
+		</div>
+	</div>
+
+	<div class="ui second modal">
+		<div class="header">Second Modal</div>
+		<div class="content">
+			<p>Our second modal.</p>
+		</div>
+		<div class="actions">
+			<div class="ui approve button">Next</div>
+			<div class="ui back button">Go back</div>
+			<div class="ui cancel button">Exit</div>
+		</div>
+	</div>
+	
+	<div class="ui third modal">
+		<div class="header">Third Modal</div>
+		<div class="content">
+			<p>Our third modal.</p>
+		</div>
+		<div class="actions">
+			<div class="ui approve button">End</div>
+			<div class="ui back button">Go back</div>
+		</div>
+	</div>
+	<div class="ui segment" style="text-align: center">
+		<h2 class="ui dividing header">Modal Tests</h2>
+		<button class="ui primary button" id="begin-test">Test Branching Logic</button>
+	</div>
+</body>
+</html>
+
+<script>
+
+$( document ).ready(function() {
+
+	$('.coupled.modal')
+		.modal({
+			allowMultiple: false
+		})
+	;
+	$('.third.modal')
+		.modal('attach events', '.second.modal .approve.button')
+	;
+	
+	// attach events to buttons
+	$('.second.modal')
+		.modal('attach events', '.first.modal .approve.button')
+		.modal('attach events', '.third.modal .back')
+	;
+	// show first now
+	$('.first.modal')
+		.modal('attach events', '.second.modal .back.button')
+	;
+	
+	$('#begin-test').on('click', function (e) {
+		$('.first.modal').modal('show');
+	})
+});
+
+</script>
